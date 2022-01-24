@@ -1,15 +1,24 @@
 {% extends "home/base.html" %}
+{% load static %}
 {% block content %}
+    <div class="row">
     {% for module in modules%}
-        <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
-                <a class="mr-2">{{ module.time }} minutes</a>
-                <small class="text-muted">{{ module.difficulty }}</small>
-                </div>
-                <h2><a class="article-title" href="#">{{ module.title }}</a></h2>
-                <p class="article-content">{{ module.description }}</p>
+    <div class="col-md-6">
+        <div class="card mb-3">
+            <img class="card-img-top" src="{% static module.image %}">
+            <div class="card-body">
+              <h5 class="card-title">{{ module.title }}</h5>
+              <p class="card-text">{{ module.description }}</p>
             </div>
-        </article>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">{{ module.difficulty }}</li>
+              <li class="list-group-item">{{ module.time }} minutes</li>
+            </ul>
+            <div class="card-body">
+              <a href="#" class="card-link">Enroll</a>
+            </div>
+        </div>
+    </div>
     {% endfor %}
+    </div>  
 {% endblock content%}

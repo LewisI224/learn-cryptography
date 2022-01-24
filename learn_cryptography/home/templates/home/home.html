@@ -1,5 +1,18 @@
 {% extends "home/base.html" %}
 {% block content %}
-<button class="nav-item nav-link" href="">LOGIN</button>
-<button class="nav-item nav-link" href="">REGISTER</button>
+{% load static %}
+
+<div class="container">
+    <div class="row">
+        <img src="{% static '/home/homepage.jpg' %}" class="img-fluid" alt="...">
+    </div>
+    <div class="row"><p></p></div>
+    <div class="row">
+
+        <div class="col"><a class="btn btn-lg btn-primary btn-block" href="#" role="button">LOGIN</a></div>
+        
+        <div class="col"><a class="btn btn-lg btn-primary btn-block" href="#" role="button">REGISTER</a></div>
+        
+    </div>
+</div>
 {% endblock content%}
