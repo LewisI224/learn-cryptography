@@ -22,16 +22,21 @@
     <header class="site-header">
         <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
             <div class="container">
-            <a class="navbar-brand mr-4" href="{% url 'public-home' %}">learn:cryptography</a>
+            <a class="navbar-brand mr-4" href="#">learn:cryptography</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarToggle">
                 <div class="navbar-nav mr-auto">
-                <a class="nav-item nav-link" href="{% url 'public-home' %}">Home</a>
+                {% if user.is_authenticated %}
+                    <a class="nav-item nav-link" href="{% url 'learning' %}">Learning</a>
+                {% endif %}
                 <a class="nav-item nav-link" href="{% url 'public-about' %}">About</a>
+                {% if user.is_superuser %}
+                    <a class="nav-item nav-link" href="/admin">Admin</a>
+                {% endif %}
+                
                 </div>
-                <!-- Navbar Right Side -->
                 <div class="navbar-nav">
                     {% if user.is_authenticated %}
                         <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
@@ -56,15 +61,6 @@
                     {% endfor %}
                 {% endif %}
                 {% block content %}{% endblock %}
-            </div>
-            <div class="col-md-4">
-            <div class="content-section">
-                <ul class="list-group">
-                    <li class="list-group-item list-group-item-light">NEWS</li>
-                    <li class="list-group-item list-group-item-light">BLOG</li>
-                    <li class="list-group-item list-group-item-light">LEADERBOARD</li>
-                </ul>
-            </div>
             </div>
         </div>
     </main>
