@@ -1,8 +1,10 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
+    <h1>Modules</h1>
     <div class="row">
-    {% for module in modules%}
+    
+    {% for module in modules %}
     <div class="col-md-6">
         <div class="card mb-3">
             <img class="card-img-top" src="{% static module.image %}">
@@ -15,10 +17,15 @@
               <li class="list-group-item">{{ module.time }} minutes</li>
             </ul>
             <div class="card-body">
-              <a href="{{ module.learningPage }}" class="card-link">Enroll</a>
+            <a class="btn btn-lg btn-primary btn-block" type="submit" name="enroll" href="{{ module.pagePath }}" class="card-link">Start Learning</a>            
+            </div>
+            <div class="card-body">
+            {% for tag in module.tags.all %}
+              {{ tag }},
+            {% endfor %}
             </div>
         </div>
     </div>
     {% endfor %}
     </div>  
-{% endblock content%}
+{% endblock content %}
