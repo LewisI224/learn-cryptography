@@ -26,4 +26,4 @@ def Module(request):
     module = LearningModules.objects.get(pagePath=reverse(Module))
     pageUrl = module.learningPage
     Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel=module.title)
-    return render(request, pageUrl)
+    return render(request, pageUrl, {'title':module.title})
