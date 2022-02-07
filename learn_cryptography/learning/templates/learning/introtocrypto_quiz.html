@@ -1,0 +1,10 @@
+{% extends "learning/learningtemplate.html" %}
+{% block learning %}
+<h1>{{ quiz.name }} Quiz</h1>
+<h2>{{ question.text }}</h2>
+{% for answer in answers %}
+    <ul>{{ answer.text }}</ul>
+{% endfor %}
+
+<a class = "btn btn-lg btn-success btn-block" href="">Submit</a>
+{% endblock learning %}

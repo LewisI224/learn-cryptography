@@ -1,4 +1,4 @@
-{% extends "home/learning/learningtemplate.html" %}
+{% extends "learning/learningtemplate.html" %}
 {% load static %}
 {% block learning %}
 <script type="text/javascript">
@@ -7,37 +7,48 @@ var numberDocuments = 1;
 const documents = [];
 
 function startup() {
-    fetch("{% static 'home/introtocrypto1.txt' %}")
+    fetch("{% static 'learning/introtocrypto1.txt' %}")
     .then(response => response.text())
     .then(text => documents.push(text))
-    fetch("{% static 'home/introtocrypto2.txt' %}")
+    fetch("{% static 'learning/introtocrypto2.txt' %}")
     .then(response => response.text())
     .then(text => documents.push(text))
 }
 function previousPage() {
     if (currentDocument > 0) {
+        
         currentDocument -= 1;
-        document.getElementById('learning').innerText = documents[currentDocument];
+        document.getElementById('learning').innerHTML = documents[currentDocument];
+        
     }       
 }
 
 function nextPage() {
     if (currentDocument < numberDocuments) {
+        
         currentDocument += 1;
-        document.getElementById('learning').innerText = documents[currentDocument];
+        document.getElementById('learning').innerHTML = documents[currentDocument];
+        
     }  
 }
 </script>
-
-<h1>Intro to Cryptography</h1>
+<div class="col mb-5"><a class = "btn btn-lg btn-success btn-block" href="{% url 'quiz' %}">Go to Quiz</a></div>
 <div class="row">
     <div class="col"><button class = "btn btn-lg btn-warning btn-block" onclick="previousPage()">Previous</button></div>
     <div class="col"><button class = "btn btn-lg btn-success btn-block" onclick="nextPage()">Next</button></div>
 </div>
-<body onload="startup()"></body>
-<div id="learning">
-    Welcome to an Introduction to Cryptography. Cryptography has a long and ancient history strecthing back to the times of the Ancient Greeks and Julius Caesar. The development of cryptography proved to be an essential
-    component in advancing techniques of warfare with a need to be able to secretly communicate with allies without the risk of enemies discovering the content of the message.
+<h1>Intro to Cryptography</h1>
+<img class="img-fluid" src="{% static 'learning/intro_to_cryptography.jpg' %}"></img>
+<div>
+    <body onload="startup()"></body>
+    <div class="row"id="learning">
+    Press next to start learning!
+    
+    </div>
+    
+    
 </div>
+
+
 
 {% endblock learning %}
