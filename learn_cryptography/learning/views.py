@@ -27,12 +27,17 @@ def Module(request):
     return render(request, pageUrl, context)
 
 def quiz(request):
-    Aquiz = Quiz.objects.get(topic=reverse(quiz))
-    Aquestion = Question.objects.get(quiz=Aquiz)
+    Aquiz = Quiz.objects.get(assosPage=reverse(quiz))
+    questions_list = list(Question.objects.filter(quiz=Aquiz))
+    answers_dict = {}
+    for i in range(len(questions_list)):
+        answers = Answer.objects.filter(question=(questions_list[i]))
+        answers_dict[i] = ((list(answers)))
+   
     context = {
         'quiz': Aquiz,
-        'question': Aquestion,
-        'answers': Answer.objects.filter(question=Aquestion),
+        'questions': questions_list,
+        'answers': answers_dict,
         'title': 'quiz',
     }
     return render(request, 'learning/introtocrypto_quiz.html', context)

@@ -22,31 +22,24 @@ class LearningModules(models.Model):
         return self.title
 
 class Quiz(models.Model):
-    name = models.CharField(max_length=120)
-    topic = models.CharField(max_length=120)
+    title = models.CharField(max_length=120, default='title')
+    assosPage = models.CharField(max_length=120, default='Page Path')
     number_of_questions = models.IntegerField()
-    required_score_to_pass = models.IntegerField()
+    required_score_to_pass = models.IntegerField(help_text="required score in %")
 
+    def __str__(self):
+        return self.title
+    
     def get_questions(self):
         questions = list(self.question_set.all())
         random.shuffle(questions)
         return questions[:self.number_of_questions]
 
 class Question(models.Model):
-    text = models.CharField(max_length=200)
+    title = models.CharField(max_length=100, default='title')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return str(self.text)
-
-    def get_answers(self):
-        return self.answer_set.all()
 
 class Answer(models.Model):
     text = models.CharField(max_length=200)
     correct = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"question: {self.question.text}, answer: {self.text}, correct: {self.correct}"
-

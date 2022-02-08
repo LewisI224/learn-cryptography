@@ -1,9 +1,22 @@
 {% extends "learning/learningtemplate.html" %}
 {% block learning %}
-<h1>{{ quiz.name }} Quiz</h1>
-<h2>{{ question.text }}</h2>
-{% for answer in answers %}
-    <ul>{{ answer.text }}</ul>
+<h1>{{ quiz.title }} Quiz</h1>
+{% for question in questions %}
+    <h2>{{ question.title }}?</h2>
+    {% for key, answer in answers.items %}
+        
+        {% for ans in answer %}
+            {% if ans.question == question %}
+            <div class="col form-check">
+            <div class="row mb-2">
+                <input class="form-check-input" type="radio" name="{{ question.title }}" id="{{ ans.text }}">
+                <label class="form-check-label" for="{{ ans.text }}"><ul>{{ ans.text }}</ul></label>   
+            </div>                    
+            </div>                
+            {% endif %}
+        {% endfor %}
+    
+    {% endfor %}
 {% endfor %}
 
 <a class = "btn btn-lg btn-success btn-block" href="">Submit</a>
