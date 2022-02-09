@@ -24,6 +24,7 @@ class LearningModules(models.Model):
 class Quiz(models.Model):
     title = models.CharField(max_length=120, default='title')
     assosPage = models.CharField(max_length=120, default='Page Path')
+    htmlPage = models.CharField(max_length=120, default='HTML Path')
     number_of_questions = models.IntegerField()
     required_score_to_pass = models.IntegerField(help_text="required score in %")
 
@@ -43,3 +44,6 @@ class Answer(models.Model):
     text = models.CharField(max_length=200)
     correct = models.BooleanField(default=False)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text

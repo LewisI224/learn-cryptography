@@ -1,23 +1,86 @@
 {% extends "learning/learningtemplate.html" %}
 {% block learning %}
+<script type="text/javascript">
+    function markQuiz() {
+        var correctAnswers = "{{ correctAnswers }}".split(',');
+        var title = "{{ Qtitle }}".split(',');
+        
+        var correct = 0;
+        var pass_mark = "{{ quiz.required_score_to_pass }}";
+        
+        for (let i = 0; i <= title.length; i++) {
+            var radios = document.getElementsByName(title[i])
+            for ( j = 0; j < radios.length; j++ ) {
+                if( radios[j].checked && correctAnswers.includes(radios[j].id)) {
+                    correct += 1 ;
+                }
+            }
+        }
+        
+        if (correct >= pass_mark) {
+            $('#passModal').modal('toggle')
+        }
+        else {
+            $('#failModal').modal('toggle')
+        }
+    }
+
+
+</script>
 <h1>{{ quiz.title }} Quiz</h1>
 {% for question in questions %}
     <h2>{{ question.title }}?</h2>
-    {% for key, answer in answers.items %}
-        
-        {% for ans in answer %}
-            {% if ans.question == question %}
-            <div class="col form-check">
-            <div class="row mb-2">
-                <input class="form-check-input" type="radio" name="{{ question.title }}" id="{{ ans.text }}">
-                <label class="form-check-label" for="{{ ans.text }}"><ul>{{ ans.text }}</ul></label>   
-            </div>                    
-            </div>                
+    {% for answer_list in answers_list %}
+        {% for answer in answer_list %}
+            {% if answer.question == question %}
+                <div class="col form-check">
+                    <div class="row mb-2">
+                        <input class="form-check-input" type="radio" name="{{ question.title }}" id="{{ answer }}">
+                        <label class="form-check-label" for="{{ answer }}" ><ul>{{ answer }}</ul></label>   
+                    </div>                    
+                </div>                
             {% endif %}
         {% endfor %}
-    
     {% endfor %}
 {% endfor %}
 
-<a class = "btn btn-lg btn-success btn-block" href="">Submit</a>
+<button class = "btn btn-lg btn-success btn-block" onclick="markQuiz()">Finish Quiz</button>
+
+<div class="modal fade" id="passModal" tabindex="-1" role="dialog" aria-labelledby="passModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="passModal">Pass</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You passed! Well Done
+        </div>
+        <div class="modal-footer">
+          <a type="button" class="btn btn-primary" href="{% url 'completed-learning' %}">Return to Learning</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="failModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="failModal">Fail</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You have not anwered enough questions correctly
+        </div>
+        <div class="modal-footer">
+          <a type="button" class="btn btn-primary" href="{% url 'crypto-module' %}">Re-take module</a>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock learning %}

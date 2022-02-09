@@ -4,6 +4,7 @@ from users.models import Profile
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.shortcuts import redirect
 
 modules = LearningModules.objects.all()
 @login_required
@@ -28,16 +29,33 @@ def Module(request):
 
 def quiz(request):
     Aquiz = Quiz.objects.get(assosPage=reverse(quiz))
-    questions_list = list(Question.objects.filter(quiz=Aquiz))
-    answers_dict = {}
+    page = Aquiz.htmlPage
+    questions_list = Question.objects.filter(quiz=Aquiz)
+    question_title = []
+    answerList = []
+    correctAnswers = []
+
     for i in range(len(questions_list)):
-        answers = Answer.objects.filter(question=(questions_list[i]))
-        answers_dict[i] = ((list(answers)))
-   
+        question_title.append(questions_list[i].title)
+        Qanswers = Answer.objects.filter(question=(questions_list[i]))
+        answerList.append(list(Qanswers))
+        for answer in Qanswers:
+            if (answer.correct):
+                correctAnswers.append(answer.text)
+    correctAnswers = ','.join(correctAnswers)
+    question_title = ','.join(question_title)
     context = {
         'quiz': Aquiz,
         'questions': questions_list,
-        'answers': answers_dict,
+        'Qtitle': question_title,
+        'answers_list': answerList,
+        'correctAnswers': correctAnswers,
         'title': 'quiz',
     }
-    return render(request, 'learning/introtocrypto_quiz.html', context)
+    return render(request, page, context)
+
+def complete(request):
+    currScore = request.user.profile.score
+    updScore = currScore + 100
+    Profile.objects.filter(pk=request.user.profile.pk).update(score=updScore)
+    return redirect('learning')
