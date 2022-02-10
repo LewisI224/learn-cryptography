@@ -4,14 +4,13 @@
     function markQuiz() {
         var correctAnswers = "{{ correctAnswers }}".split(',');
         var title = "{{ Qtitle }}".split(',');
-        
+        console.log(correctAnswers)
         var correct = 0;
         var pass_mark = "{{ quiz.required_score_to_pass }}";
-        
         for (let i = 0; i <= title.length; i++) {
             var radios = document.getElementsByName(title[i])
             for ( j = 0; j < radios.length; j++ ) {
-                if( radios[j].checked && correctAnswers.includes(radios[j].id)) {
+                if( radios[j].checked && correctAnswers.includes(radios[j].id)) {                  
                     correct += 1 ;
                 }
             }
@@ -63,24 +62,24 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 
-  <div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="failModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="failModal">Fail</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          You have not anwered enough questions correctly
-        </div>
-        <div class="modal-footer">
-          <a type="button" class="btn btn-primary" href="{% url 'crypto-module' %}">Re-take module</a>
-        </div>
+<div class="modal fade" id="failModal" tabindex="-1" role="dialog" aria-labelledby="failModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="failModal">Fail</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You have not anwered enough questions correctly
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-primary" href="{% url 'crypto-module' %}">Re-take module</a>
       </div>
     </div>
   </div>
+</div>
 {% endblock learning %}

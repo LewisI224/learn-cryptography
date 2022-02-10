@@ -17,12 +17,17 @@ def learning(request):
     return render(request, 'learning/learning.html', context)
 
 def Module(request):
-    module = LearningModules.objects.get(pagePath=reverse(Module))
+    module = LearningModules.objects.get(pagePath=request.get_full_path())
     pageUrl = module.learningPage
     Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel=module.title)
-
+    text_string = module.text
     context = {
         'title':module.title,
+        'text':text_string,
+        'glossary':module.glossary,
+        'image':module.image,
+        'quizPath':module.quizPath,
+        'numberDocuments':module.numberDocuments,
         
     }
     return render(request, pageUrl, context)
@@ -61,7 +66,3 @@ def complete(request):
     Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
     return redirect('learning')
 
-def reset(request):
-    Profile.objects.filter(pk=request.user.profile.pk).update(score=0)
-    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
-    return redirect('profile')

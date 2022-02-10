@@ -2,6 +2,7 @@ from email import message
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .models import Profile
 from django.contrib.auth.decorators import login_required
 
 def register(request):
@@ -28,10 +29,26 @@ def profile(request):
     else:
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
-
+        titles = []
+        cmpld = []
+        modules = (list(request.user.profile.completedModules.values('title')))
+        for title in modules:
+            titles.append(list(title.values()))
+        characters = "[]'"
+        for l in titles:
+            cmpld.append(str(l).strip(characters))
+        print(cmpld)
+        titles = ','.join(cmpld)
     context = {
         'u_form' : u_form,
-        'p_form' : p_form
+        'p_form' : p_form,
+        'modules': titles,
     }
 
     return render(request, 'users/profile.html', context)
+
+def reset(request):
+    Profile.objects.filter(pk=request.user.profile.pk).update(score=0)
+    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
+    Profile.objects.filter(pk=request.user.profile.pk).update(completedModules=None)
+    return redirect('profile')
