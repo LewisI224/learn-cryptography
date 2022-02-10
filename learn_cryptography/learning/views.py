@@ -58,4 +58,10 @@ def complete(request):
     currScore = request.user.profile.score
     updScore = currScore + 100
     Profile.objects.filter(pk=request.user.profile.pk).update(score=updScore)
+    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
     return redirect('learning')
+
+def reset(request):
+    Profile.objects.filter(pk=request.user.profile.pk).update(score=0)
+    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
+    return redirect('profile')
