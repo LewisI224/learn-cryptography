@@ -1,10 +1,10 @@
-{% extends "learning/learningtemplate.html" %}
+{% extends "home/base.html" %}
 {% load static %}
-{% block learning %}
+{% block content %}
 <script type="text/javascript">
 var currentDocument = -1;
-console.log("{{numberDocuments|safe}}")
 var numberDocuments = "{{numberDocuments|safe}}";
+var numberDocuments = numberDocuments - 1;
 const documents = [];
 
 function startup() {
@@ -71,4 +71,4 @@ function nextPage() {
     </div>
 </div>
 
-{% endblock learning %}
+{% endblock content %}

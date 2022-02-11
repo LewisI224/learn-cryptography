@@ -50,5 +50,5 @@ def profile(request):
 def reset(request):
     Profile.objects.filter(pk=request.user.profile.pk).update(score=0)
     Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
-    Profile.objects.filter(pk=request.user.profile.pk).update(completedModules=None)
+    request.user.profile.completedModules.clear()
     return redirect('profile')
