@@ -37,7 +37,6 @@ def profile(request):
         characters = "[]'"
         for l in titles:
             cmpld.append(str(l).strip(characters))
-        print(cmpld)
         titles = ','.join(cmpld)
     context = {
         'u_form' : u_form,
@@ -49,6 +48,6 @@ def profile(request):
 
 def reset(request):
     Profile.objects.filter(pk=request.user.profile.pk).update(score=0)
-    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
+    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="Nothing")
     request.user.profile.completedModules.clear()
     return redirect('profile')

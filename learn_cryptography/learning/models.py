@@ -1,28 +1,22 @@
 from django.db import models
 import random
+from taggit.managers import TaggableManager
+
 difficulties = [('Beginner','BEGINNER'), ('Intermediate','INTERMEDIATE'), ('Advanced','ADVANCED ')]
 
-class Tag(models.Model):
-    tag = models.CharField(max_length=35)
-
-    def __str__(self):
-        return self.tag
-
-
-
 class LearningModules(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=100, default="Module Title")
     image = models.CharField(max_length=100, default="/home/default.jpg")
-    description = models.TextField()
+    description = models.TextField(default="A short description of the module content")
     difficulty = models.CharField(choices=difficulties, max_length=15, default='BEGINNER')
-    time = models.IntegerField()
+    time = models.IntegerField(default=0)
     numberDocuments = models.IntegerField(default=0)
     learningPage = models.CharField(max_length=100, default="default")
     pagePath = models.CharField(max_length=100, default="error404")
     quizPath = models.CharField(max_length=100, default="quiz")
-    tags = models.ManyToManyField(Tag)
-    text = models.TextField(default="None")
-    glossary = models.TextField(default="None")
+    tags = TaggableManager()
+    text = models.TextField(default="The learning content for the module with each page seperated witha colon;")
+    glossary = models.TextField(default="A list of technical words and their definitions")
 
     def __str__(self):
         return self.title

@@ -8,10 +8,27 @@ from django.shortcuts import redirect
 
 modules = LearningModules.objects.all()
 @login_required
-def learning(request):
+def learning(request, tag=None):
+    titles = []
+    cmpld = []
+    modules = (list(request.user.profile.completedModules.values('title')))
+    for title in modules:
+            titles.append(list(title.values()))
+    characters = "[]'"
+    for l in titles:
+        cmpld.append(str(l).strip(characters))
+    titles = ','.join(cmpld)
+    if tag:
+        modules = LearningModules.objects.filter(tags__name__in=[tag])
+    else:
+        modules = LearningModules.objects.all()
+    tags = LearningModules.tags.all()
     context = {
-        'modules' : LearningModules.objects.all(),
-        'title' : 'learning'
+        'modules' : modules,
+        'completed': titles,
+        'title' : 'learning',
+        'tags':tags,
+        'tag': tag,
     } 
 
     return render(request, 'learning/learning.html', context)
@@ -61,8 +78,15 @@ def quiz(request):
 
 def complete(request):
     currScore = request.user.profile.score
+    completedModule = LearningModules.objects.get(title=request.user.profile.currentLevel)
     updScore = currScore + 100
+    profile = Profile.objects.get(pk=request.user.profile.pk)
+    profile.completedModules.add(completedModule)
     Profile.objects.filter(pk=request.user.profile.pk).update(score=updScore)
-    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="nothing")
+    Profile.objects.filter(pk=request.user.profile.pk).update(currentLevel="Nothing")
     return redirect('learning')
 
+def tags(request):
+    tag = request.get_full_path()
+    tag = tag.strip("/")
+    return learning(request, tag)

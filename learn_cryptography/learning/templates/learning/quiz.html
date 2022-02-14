@@ -1,5 +1,5 @@
-{% extends "learning/learningtemplate.html" %}
-{% block learning %}
+{% extends "home/base.html" %}
+{% block content %}
 <script type="text/javascript">
     function markQuiz() {
         var correctAnswers = "{{ correctAnswers }}".split(',');
@@ -82,4 +82,4 @@
     </div>
   </div>
 </div>
-{% endblock learning %}
+{% endblock content %}

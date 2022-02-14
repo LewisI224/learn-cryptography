@@ -29,6 +29,8 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('profile_reset/', user_views.reset , name='reset'),
     path('learning/', include('learning.urls')),
+    path('beginner', learning_views.tags, name='tags'),
+    path('historical', learning_views.tags, name='tags'),
     path('', include('home.urls')),
     
 ]

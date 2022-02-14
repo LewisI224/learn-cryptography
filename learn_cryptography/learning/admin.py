@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import LearningModules, Tag
+from .models import LearningModules
 
 admin.site.register(LearningModules)
-admin.site.register(Tag)
 
 from .models import Question, Answer, Quiz
 
