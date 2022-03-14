@@ -1,12 +1,13 @@
-from django.db import models
 import random
+
+from django.db import models
 from taggit.managers import TaggableManager
 
 difficulties = [('Beginner','BEGINNER'), ('Intermediate','INTERMEDIATE'), ('Advanced','ADVANCED ')]
 
 class LearningModules(models.Model):
     title = models.CharField(max_length=100, default="Module Title")
-    image = models.CharField(max_length=100, default="/home/default.jpg")
+    image = models.CharField(max_length=100, default="/learning/default.jpg")
     description = models.TextField(default="A short description of the module content")
     difficulty = models.CharField(choices=difficulties, max_length=15, default='BEGINNER')
     time = models.IntegerField(default=0)

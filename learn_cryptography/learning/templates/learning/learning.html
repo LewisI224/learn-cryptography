@@ -1,12 +1,13 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-    
-    <div class="row">
+  <div class="row">
     <div class="col">
       <h1>Modules</h1>
     <div class="card-deck">
+    
     {% for module in modules %}
+        <div class="col-4">
           <div class="card mb-3">
               <img class="card-img-top" src="{% static module.image %}">
               <div class="card-body">
@@ -27,9 +28,11 @@
               {% endfor %}
               </div>
           </div>
+        </div>
     {% endfor %}
     </div>
     </div>
+    
     <div class="col-3">
       <h1>Tags</h1>
       <a class="btn btn-lg btn-info btn-block"href="{% url 'learning' %}">Reset Tags</a>
@@ -37,5 +40,5 @@
         <a class="btn btn-lg btn-info btn-block"href="/{{ tag }}">{{ tag }}</a>
       {% endfor %}
     </div>
-    </div>  
+  </div>
 {% endblock content %}

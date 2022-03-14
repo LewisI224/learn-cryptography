@@ -30,7 +30,11 @@ urlpatterns = [
     path('profile_reset/', user_views.reset , name='reset'),
     path('learning/', include('learning.urls')),
     path('beginner', learning_views.tags, name='tags'),
+    path('intermediate', learning_views.tags, name='tags'),
     path('historical', learning_views.tags, name='tags'),
+    path('fun', learning_views.tags, name='tags'),
+    path('advanced', learning_views.tags, name='tags'),
+    path('modern', learning_views.tags, name='tags'),
     path('', include('home.urls')),
     
 ]
