@@ -2,12 +2,13 @@
 {% load static %}
 {% block content %}
   <div class="row">
+    <!-- modules section -->
     <div class="col">
       <h1>Modules</h1>
     <div class="card-deck">
     
     {% for module in modules %}
-        <div class="col-4">
+        <div class="col-6">
           <div class="card mb-3">
               <img class="card-img-top" src="{% static module.image %}">
               <div class="card-body">
@@ -33,6 +34,7 @@
     </div>
     </div>
     
+    <!-- tags sidebar -->
     <div class="col-3">
       <h1>Tags</h1>
       <a class="btn btn-lg btn-info btn-block"href="{% url 'learning' %}">Reset Tags</a>
@@ -40,5 +42,6 @@
         <a class="btn btn-lg btn-info btn-block"href="/{{ tag }}">{{ tag }}</a>
       {% endfor %}
     </div>
+
   </div>
 {% endblock content %}

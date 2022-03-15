@@ -8,13 +8,15 @@ def home(request):
         try:
             currentModule = LearningModules.objects.get(title=request.user.profile.currentLevel)
         except LearningModules.DoesNotExist:
-            currentModule = LearningModules.objects.last()
+            currentModule = LearningModules.objects.first()
     else:
         currentModule = None
-    
+    if request.user.is_authenticated:
+        profile = request.user.profile
     context = {
         'currentModule': currentModule,
-        'modules' : LearningModules.objects.all(),
+        'modules' : LearningModules.objects.all()[:3],
+        'profile': profile
     }
     return render(request, 'home/home.html', context)
 

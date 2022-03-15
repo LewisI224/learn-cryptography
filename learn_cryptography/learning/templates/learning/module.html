@@ -1,56 +1,35 @@
 {% extends "home/base.html" %}
 {% load static %}
 {% block content %}
-<script type="text/javascript">
-var currentDocument = -1;
-var numberDocuments = "{{numberDocuments|safe}}";
-var numberDocuments = numberDocuments - 1;
-const documents = [];
 
-function startup() {
-    var texts = "{{ text }}".split(';');
-    for (let i = 0; i <= texts.length; i++) {
-        documents.push(texts[i])
-    }
-    // fetch("{% static 'learning/introtocrypto1.txt' %}")
-    // .then(response => response.text())
-    // .then(text => documents.push(text))
-    // fetch("{% static 'learning/introtocrypto2.txt' %}")
-    // .then(response => response.text())
-    // .then(text => documents.push(text))
-}
-function previousPage() {
-    if (currentDocument > 0) {
-        
-        currentDocument -= 1;
-        document.getElementById('learning').innerHTML = documents[currentDocument];
-        
-    }       
-}
-
-function nextPage() {
-    if (currentDocument < numberDocuments) {
-        
-        currentDocument += 1;
-        document.getElementById('learning').innerHTML = documents[currentDocument];
-        
-    }  
-}
-</script>
-<div class="col mb-5"><a class = "btn btn-lg btn-success btn-block" href="{% url quizPath %}">Go to Quiz</a></div>
-<div class="row">
-    <div class="col"><button class = "btn btn-lg btn-warning btn-block" onclick="previousPage()">Previous</button></div>
-    <div class="col"><button class = "btn btn-lg btn-info btn-block" data-toggle="modal" data-target="#glossaryModal">Glossary</button></div>
-    <div class="col"><button class = "btn btn-lg btn-success btn-block" onclick="nextPage()">Next</button></div>
+<div class="row justify-content-center">
+    <div class="col-6">
+        <h1>{{ title }}</h1>
+    </div>
 </div>
-<h1>{{ title }}</h1>
-<img class="img-fluid" src="{% static image %}"></img>
-<div>
-    <body onload="startup()"></body>
-    <div class="row"id="learning">
-        Press next to start learning!
+<div class="row justify-content-center">
+    <div class="col-6">
+        <img class="img-fluid img-thumbnail" src="{% static image %}"></img>
+    </div>
+</div>
+
+
+<div class="row justify-content-center mb-5">
+    <div class="col-9"id="learning">
+        {{ text|safe }}
     </div> 
 </div>
+
+<div class="row justify-content-center">
+    <div class="col mb-5">
+        <a class = "btn btn-lg btn-success btn-block" href="{% url quizPath %}">Go to Quiz</a>
+    </div>
+    <div class="col mb-5">
+        <button class = "btn btn-lg btn-info btn-block" data-toggle="modal" data-target="#glossaryModal">Glossary</button>
+    </div>
+</div>
+
+
 
 <div class="modal fade" id="glossaryModal" tabindex="-1" role="dialog" aria-labelledby="glossaryModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
