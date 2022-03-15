@@ -50,6 +50,7 @@ def Module(request):
     return render(request, pageUrl, context)
 
 def quiz(request):
+    print(reverse(quiz))
     Aquiz = Quiz.objects.get(assosPage=reverse(quiz))
     page = Aquiz.htmlPage
     questions_list = Question.objects.filter(quiz=Aquiz)
