@@ -29,12 +29,18 @@ urlpatterns = [
     path('profile/', user_views.profile, name='profile'),
     path('profile_reset/', user_views.reset , name='reset'),
     path('learning/', include('learning.urls')),
+
     path('beginner', learning_views.tags, name='tags'),
     path('intermediate', learning_views.tags, name='tags'),
     path('historical', learning_views.tags, name='tags'),
     path('fun', learning_views.tags, name='tags'),
     path('advanced', learning_views.tags, name='tags'),
     path('modern', learning_views.tags, name='tags'),
+
+    path('suggested', learning_views.sort, name='sort'),
+    path('time', learning_views.sort, name='sort'),
+    path('difficulty', learning_views.sort, name='sort'),
+
     path('', include('home.urls')),
     
 ]

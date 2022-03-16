@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 modules = LearningModules.objects.all()
 @login_required
-def learning(request, tag=None):
+def learning(request, tag=None, sort=None):
     titles = []
     cmpld = []
     modules = (list(request.user.profile.completedModules.values('title')))
@@ -18,10 +18,19 @@ def learning(request, tag=None):
     for l in titles:
         cmpld.append(str(l).strip(characters))
     titles = ','.join(cmpld)
+
     if tag:
         modules = LearningModules.objects.filter(tags__name__in=[tag])
     else:
         modules = LearningModules.objects.all()
+    if sort:
+        if (sort=="time"):
+            modules=LearningModules.objects.all().order_by("time")
+        elif(sort=="difficulty"):
+            modules=LearningModules.objects.all().order_by("difficultyNumber")
+        elif(sort=="suggested"):
+            modules=LearningModules.objects.all().order_by("suggestedOrder")
+
     tags = LearningModules.tags.all()
     context = {
         'modules' : modules,
@@ -29,6 +38,7 @@ def learning(request, tag=None):
         'title' : 'learning',
         'tags':tags,
         'tag': tag,
+        'sort':sort,
     } 
 
     return render(request, 'learning/learning.html', context)
@@ -89,4 +99,10 @@ def complete(request):
 def tags(request):
     tag = request.get_full_path()
     tag = tag.strip("/")
-    return learning(request, tag)
+    return learning(request, tag=tag, sort=None)
+
+def sort(request):
+    sort = request.get_full_path()
+    sort = sort.strip("/")
+    return learning(request, tag=None, sort=sort)
+

@@ -1,6 +1,7 @@
 from turtle import title
 from django.shortcuts import render
 from learning.models import LearningModules
+from users.models import Profile
 
 
 def home(request):
@@ -22,4 +23,11 @@ def home(request):
 
 def about(request):
     return render(request, 'home/about.html', {'title':'About'})
+
+def leaderboard(request):
+    context = {
+        'profiles' : Profile.objects.all().order_by("-score")
+    }
+    
+    return render(request, 'home/leaderboard.html', context)
 

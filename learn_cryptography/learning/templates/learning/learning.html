@@ -4,14 +4,29 @@
   <div class="row">
     <!-- modules section -->
     <div class="col">
-      <h1>Modules</h1>
-    <div class="card-deck">
+      <div class="row">
+        <div class="col-8">
+          <h1>Modules</h1>
+        </div>
+        <div class="col">
+          <select class="form-select" aria-label="Default select example" id="sortOrder">
+            <option value="time">Time</option>
+            <option value="difficulty">Difficulty</option>
+            <option selected value="suggested">Suggested Order</option>
+          </select>
+          
+          <a class="btn btn-primary" href="javascript:document.location.href=sort(document.getElementById('sortOrder').value);">Sort</a>
+        </div>
+        
+      </div>
+      
+    <div class="card-deck" id="cardDeck">
     
     {% for module in modules %}
         <div class="col-6">
           <div class="card mb-3">
               <img class="card-img-top" src="{% static module.image %}">
-              <div class="card-body">
+              <div class="card-body" style="height: 15rem;">
                 <h5 class="card-title">{{ module.title }}</h5>
                 <p class="card-text">{{ module.description }}</p>
               </div>
@@ -44,4 +59,12 @@
     </div>
 
   </div>
+
+  <script>
+
+    function sort(sortType) {
+      return ("/" + sortType)
+    }
+
+  </script>
 {% endblock content %}

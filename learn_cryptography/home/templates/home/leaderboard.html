@@ -1,0 +1,25 @@
+{% extends "home/base.html" %}
+{% block content %}
+<!-- headings -->
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Position</th>
+        <th scope="col">Name</th>
+        <th scope="col">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for profile in profiles %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ profile.user }}</td>
+                <td>{{ profile.score }}</td>
+            </tr>
+        {% endfor %}
+
+    </tbody>
+  </table>
+<!-- display table -->
+
+{% endblock content%}

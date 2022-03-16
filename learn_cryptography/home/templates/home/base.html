@@ -32,6 +32,7 @@
                     <a class="nav-item nav-link" href="{% url 'learning' %}">Learning</a>
                 {% endif %}
                 <a class="nav-item nav-link" href="{% url 'public-about' %}">About</a>
+                <a class="nav-item nav-link" href="{% url 'public-leaderboard' %}">Leaderboard</a>
                 {% if user.is_superuser %}
                     <a class="nav-item nav-link" href="/admin">Admin</a>
                 {% endif %}
