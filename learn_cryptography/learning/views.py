@@ -54,7 +54,6 @@ def Module(request):
         'glossary':module.glossary,
         'image':module.image,
         'quizPath':module.quizPath,
-        'numberDocuments':module.numberDocuments,
         
     }
     return render(request, pageUrl, context)
