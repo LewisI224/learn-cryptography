@@ -32,7 +32,7 @@ class Quiz(models.Model):
     number_of_questions = models.IntegerField()
     required_score_to_pass = models.IntegerField(help_text="required score in %")
     module = models.OneToOneField(LearningModules, on_delete=models.CASCADE, default="")
-
+    assosModule = models.CharField(max_length=100, default="error404")
     def __str__(self):
         return self.title
     
@@ -42,8 +42,11 @@ class Quiz(models.Model):
         return questions[:self.number_of_questions]
 
 class Question(models.Model):
-    title = models.CharField(max_length=100, default='title')
+    title = models.TextField(max_length=100, default='title')
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.title + " " + self.quiz.__str__()
 
 class Answer(models.Model):
     text = models.CharField(max_length=200)

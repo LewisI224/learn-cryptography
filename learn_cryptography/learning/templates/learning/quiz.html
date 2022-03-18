@@ -4,7 +4,6 @@
     function markQuiz() {
         var correctAnswers = "{{ correctAnswers }}".split(',');
         var title = "{{ Qtitle }}".split(',');
-        console.log(correctAnswers)
         var correct = 0;
         var pass_mark = "{{ quiz.required_score_to_pass }}";
         for (let i = 0; i <= title.length; i++) {
@@ -21,6 +20,7 @@
         }
         else {
             $('#failModal').modal('toggle')
+            document.getElementById('score').innerHTML = ("You got " + correct + " answers correct");
         }
     }
 
@@ -74,10 +74,12 @@
         </button>
       </div>
       <div class="modal-body">
-        You have not anwered enough questions correctly
+        You have not anwered enough questions correctly <br>
+        Pass mark is {{ quiz.required_score_to_pass }} <br>
+        <p id="score"></p>
       </div>
       <div class="modal-footer">
-        <a type="button" class="btn btn-primary" href="{% url 'crypto-module' %}">Re-take module</a>
+        <a type="button" class="btn btn-primary" href="{{ quiz.assosModule }}">Re-take module</a>
       </div>
     </div>
   </div>
