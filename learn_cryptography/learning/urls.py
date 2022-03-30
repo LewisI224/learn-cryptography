@@ -23,6 +23,8 @@ urlpatterns = [
     
     path('completed', views.complete , name='completed-learning'),
     
+    path('error404', views.error, name='error404'),
+
     path('', views.learning , name='learning'),
     
 ]

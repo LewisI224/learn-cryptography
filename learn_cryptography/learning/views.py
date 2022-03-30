@@ -105,3 +105,6 @@ def sort(request):
     sort = sort.strip("/")
     return learning(request, tag=None, sort=sort)
 
+def error(request):
+
+    return render(request, 'learning/error404.html')

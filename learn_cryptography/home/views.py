@@ -14,6 +14,8 @@ def home(request):
         currentModule = None
     if request.user.is_authenticated:
         profile = request.user.profile
+    else:
+        profile = None
     context = {
         'currentModule': currentModule,
         'modules' : LearningModules.objects.all()[:3],

@@ -40,7 +40,7 @@ urlpatterns = [
     path('suggested', learning_views.sort, name='sort'),
     path('time', learning_views.sort, name='sort'),
     path('difficulty', learning_views.sort, name='sort'),
-
+    
     path('', include('home.urls')),
     
 ]
